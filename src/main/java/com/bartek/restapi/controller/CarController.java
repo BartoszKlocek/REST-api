@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cars")
@@ -47,10 +48,34 @@ public class CarController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editCar(@RequestBody Car car, @PathVariable long id){
-        if (carService.editCar(car,id)){
+    public ResponseEntity editCar(@RequestBody Car car, @PathVariable long id) {
+        if (carService.editCar(car, id)) {
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity editFieldOfCar(@RequestParam(name = "model", required = false) String model,
+                                         @RequestParam(name = "mark", required = false) String mark,
+                                         @RequestParam(name = "color", required = false) String color,
+                                         @PathVariable long id) {
+        Optional<Car> found = carService.findCarByID(id);
+        if (found.isPresent()) {
+            if (!Objects.equals(mark, null)) {
+                found.get().setMark(mark);
+            }
+            if (!Objects.equals(model, null)) {
+                found.get().setModel(model);
+            }
+            if (!Objects.equals(color, null)) {
+                found.get().setColor(color);
+            }
+            return new ResponseEntity(HttpStatus.OK);
+        }
+
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+
+
     }
 }
