@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -43,5 +44,23 @@ public class CarServiceImpl implements CarService {
     public boolean addCar(Car car) {
         car.setId((carList.get(carList.size() - 1).getId()) + 1);
         return carList.add(car);
+    }
+
+    @Override
+    public boolean editCar(Car car, long id) {
+        Optional<Car> found = carList.stream().filter(a -> a.getId() == id).findFirst();
+        if (found.isPresent()) {
+            if (!Objects.equals(car.getMark(), null)) {
+                found.get().setMark(car.getMark());
+            }
+            if (!Objects.equals(car.getModel(), null)) {
+                found.get().setModel(car.getModel());
+            }
+            if (!Objects.equals(car.getColor(), null)) {
+                found.get().setColor(car.getColor());
+            }
+            return true;
+        }
+        return false;
     }
 }

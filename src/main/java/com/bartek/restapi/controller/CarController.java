@@ -45,4 +45,12 @@ public class CarController {
         }
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity editCar(@RequestBody Car car, @PathVariable long id){
+        if (carService.editCar(car,id)){
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
