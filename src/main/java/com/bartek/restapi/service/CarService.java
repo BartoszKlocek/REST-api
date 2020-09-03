@@ -16,4 +16,6 @@ public interface CarService {
 
     boolean editCar(Car car, long id);
 
+    boolean deleteCar(long id);
+
 }

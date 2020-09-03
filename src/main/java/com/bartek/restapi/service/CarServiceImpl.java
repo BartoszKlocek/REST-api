@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+
 public class CarServiceImpl implements CarService {
 
     private List<Car> carList;
@@ -59,6 +60,16 @@ public class CarServiceImpl implements CarService {
             if (!Objects.equals(car.getColor(), null)) {
                 found.get().setColor(car.getColor());
             }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteCar(long id) {
+        Optional<Car> found = carList.stream().filter(a -> a.getId() == id).findFirst();
+        if (found.isPresent()) {
+            carList.remove(found.get());
             return true;
         }
         return false;
