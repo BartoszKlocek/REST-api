@@ -15,9 +15,9 @@ public class CarServiceImpl implements CarService {
 
     public CarServiceImpl() {
         carList = new ArrayList<>();
-        carList.add(new Car(1,"Kia","Sportage","White"));
-        carList.add(new Car(2,"Hyundai","Elantra","Green"));
-        carList.add(new Car(3,"Mazda","CX-5","Yellow"));
+        carList.add(new Car(1, "Kia", "Sportage", "White"));
+        carList.add(new Car(2, "Hyundai", "Elantra", "Green"));
+        carList.add(new Car(3, "Mazda", "CX-5", "Yellow"));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Optional<Car> findCarByID(long id) {
-        return carList.stream().filter(a->a.getId()==id).findFirst();
+        return carList.stream().filter(a -> a.getId() == id).findFirst();
     }
 
     @Override
@@ -37,5 +37,11 @@ public class CarServiceImpl implements CarService {
                 .filter(a -> a.getColor().equalsIgnoreCase(color))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public boolean addCar(Car car) {
+        car.setId((carList.get(carList.size() - 1).getId()) + 1);
+        return carList.add(car);
     }
 }

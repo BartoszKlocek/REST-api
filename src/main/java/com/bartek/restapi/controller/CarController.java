@@ -22,11 +22,11 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> getAll(@RequestParam(name = "color",required = false) String color) {
-        if (Objects.equals(color,null)){
+    public ResponseEntity<List<Car>> getAll(@RequestParam(name = "color", required = false) String color) {
+        if (Objects.equals(color, null)) {
             return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(carService.findCarByColor(color),HttpStatus.OK);
+        return new ResponseEntity<>(carService.findCarByColor(color), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -36,5 +36,13 @@ public class CarController {
             return new ResponseEntity<>(carService.findCarByID(id).get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping
+    public ResponseEntity addCar(@RequestBody Car car) {
+        if (carService.addCar(car)) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
