@@ -14,9 +14,9 @@ public class CarServiceImpl implements CarService {
 
     public CarServiceImpl() {
         carList = new ArrayList<>();
-        new Car(1,"Kia","Sportage","White");
-        new Car(2,"Hyundai","Elantra","Green");
-        new Car(3,"Mazda","CX-5","Yellow");
+        carList.add(new Car(1,"Kia","Sportage","White"));
+        carList.add(new Car(2,"Hyundai","Elantra","Green"));
+        carList.add(new Car(3,"Mazda","CX-5","Yellow"));
     }
 
     @Override
