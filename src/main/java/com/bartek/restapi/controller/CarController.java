@@ -23,11 +23,8 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> getAll(@RequestParam(name = "color", required = false) String color) {
-        if (Objects.equals(color, null)) {
-            return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(carService.findCarByColor(color), HttpStatus.OK);
+    public ResponseEntity<List<Car>> getAll() {
+        return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -37,6 +34,11 @@ public class CarController {
             return new ResponseEntity<>(carService.findCarByID(id).get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/color/{color}")
+    public ResponseEntity<List<Car>> getAllByColor(@PathVariable String color) {
+        return new ResponseEntity<>(carService.findCarByColor(color), HttpStatus.OK);
     }
 
     @PostMapping
