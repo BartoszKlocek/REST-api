@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/cars")
@@ -21,8 +22,11 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> getAll() {
-        return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Car>> getAll(@RequestParam(name = "color",required = false) String color) {
+        if (Objects.equals(color,null)){
+            return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(carService.findCarByColor(color),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -32,10 +36,5 @@ public class CarController {
             return new ResponseEntity<>(carService.findCarByID(id).get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @GetMapping("/color")
-    public ResponseEntity<List<Car>> getAllByColor(@RequestParam(name = "color",required = true) String color) {
-        return new ResponseEntity<>(carService.findCarByColor(color),HttpStatus.OK);
     }
 }
