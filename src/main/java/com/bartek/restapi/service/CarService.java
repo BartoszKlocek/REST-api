@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface CarService {
     List<Car> findAll();
     Optional<Car> findCarByID(long id);
+    List<Car> findCarByColor(String color);
 
 }

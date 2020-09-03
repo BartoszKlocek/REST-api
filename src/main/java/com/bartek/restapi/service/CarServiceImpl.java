@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -27,5 +28,14 @@ public class CarServiceImpl implements CarService {
     @Override
     public Optional<Car> findCarByID(long id) {
         return carList.stream().filter(a->a.getId()==id).findFirst();
+    }
+
+    @Override
+    public List<Car> findCarByColor(String color) {
+        return carList
+                .stream()
+                .filter(a -> a.getColor().equalsIgnoreCase(color))
+                .collect(Collectors.toList());
+
     }
 }
