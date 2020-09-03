@@ -1,6 +1,7 @@
 package com.bartek.restapi.controller;
 
 import com.bartek.restapi.model.Car;
+import com.bartek.restapi.model.Color;
 import com.bartek.restapi.service.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,7 +72,7 @@ public class CarController {
                 found.get().setModel(model);
             }
             if (!Objects.equals(color, null)) {
-                found.get().setColor(color);
+                found.get().setColor(Color.valueOf(color.toUpperCase()));
             }
             return new ResponseEntity(HttpStatus.OK);
         }

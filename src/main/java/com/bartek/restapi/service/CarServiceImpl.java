@@ -1,6 +1,7 @@
 package com.bartek.restapi.service;
 
 import com.bartek.restapi.model.Car;
+import com.bartek.restapi.model.Color;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ public class CarServiceImpl implements CarService {
 
     public CarServiceImpl() {
         carList = new ArrayList<>();
-        carList.add(new Car(1, "Kia", "Sportage", "White"));
-        carList.add(new Car(2, "Hyundai", "Elantra", "Green"));
-        carList.add(new Car(3, "Mazda", "CX-5", "Yellow"));
+        carList.add(new Car(1, "Kia", "Sportage", Color.BLUE));
+        carList.add(new Car(2, "Hyundai", "Elantra", Color.GREEN));
+        carList.add(new Car(3, "Mazda", "CX-5", Color.YELLOW));
     }
 
     @Override
@@ -36,7 +37,7 @@ public class CarServiceImpl implements CarService {
     public List<Car> findCarByColor(String color) {
         return carList
                 .stream()
-                .filter(a -> a.getColor().equalsIgnoreCase(color))
+                .filter(a -> color.equalsIgnoreCase(a.getColor().name()))
                 .collect(Collectors.toList());
 
     }

@@ -4,12 +4,12 @@ public class Car {
     private long id;
     private String mark;
     private String model;
-    private String color;
+    private Color color;
 
     public Car() {
     }
 
-    public Car(long id, String mark, String model, String color) {
+    public Car(long id, String mark, String model, Color color) {
         this.id = id;
         this.mark = mark;
         this.model = model;
@@ -40,11 +40,11 @@ public class Car {
         this.model = model;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 }
