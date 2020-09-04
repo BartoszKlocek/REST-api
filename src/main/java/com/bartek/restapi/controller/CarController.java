@@ -4,6 +4,8 @@ import com.bartek.restapi.model.Car;
 import com.bartek.restapi.model.Color;
 import com.bartek.restapi.service.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("/cars")
@@ -30,9 +34,10 @@ public class CarController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Car> findById(@PathVariable long id) {
+        Link link = linkTo(CarController.class).slash(id).withSelfRel();
         if (carService.findCarByID(id).isPresent()) {
-
-            return new ResponseEntity<>(carService.findCarByID(id).get(), HttpStatus.OK);
+            EntityModel carEntity = new EntityModel(carService.findCarByID(id).get(),link);
+            return new ResponseEntity(carEntity, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

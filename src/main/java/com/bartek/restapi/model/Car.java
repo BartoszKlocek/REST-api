@@ -1,6 +1,8 @@
 package com.bartek.restapi.model;
 
-public class Car {
+import org.springframework.hateoas.RepresentationModel;
+
+public class Car extends RepresentationModel<Car> {
     private long id;
     private String mark;
     private String model;
