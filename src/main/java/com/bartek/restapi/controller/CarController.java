@@ -41,7 +41,7 @@ public class CarController {
     public ResponseEntity<Car> findById(@PathVariable long id) {
         Link link = linkTo(CarController.class).slash(id).withSelfRel();
         if (carService.findCarByID(id).isPresent()) {
-            EntityModel carEntity = new EntityModel(carService.findCarByID(id).get(), link);
+            EntityModel<Car> carEntity = new EntityModel(carService.findCarByID(id).get(), link);
             return new ResponseEntity(carEntity, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
