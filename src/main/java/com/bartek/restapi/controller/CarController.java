@@ -34,8 +34,9 @@ public class CarController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/color")
-    public ResponseEntity<List<Car>> getAllByColor(@RequestParam(name = "color",required = true) String color) {
-        return new ResponseEntity<>(carService.findCarByColor(color),HttpStatus.OK);
+    @GetMapping("/color/{color}")
+    public ResponseEntity<List<Car>> getAllByColor(@PathVariable String color) {
+        List<Car> allCars = carService.findCarByColor(color);
+        return new ResponseEntity<>(allCars, HttpStatus.OK);
     }
 }
