@@ -39,7 +39,8 @@ public class CarController {
 
     @GetMapping("/color/{color}")
     public ResponseEntity<List<Car>> getAllByColor(@PathVariable String color) {
-        return new ResponseEntity<>(carService.findCarByColor(color), HttpStatus.OK);
+        List<Car> allCars = carService.findCarByColor(color);
+        return new ResponseEntity<>(allCars, HttpStatus.OK);
     }
 
     @PostMapping
