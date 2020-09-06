@@ -48,10 +48,6 @@ public class CarController {
     }
 
     @GetMapping("/color/{color}")
-    public ResponseEntity<List<Car>> getAllByColor(@PathVariable String color) {
-        List<Car> allCars = carService.findCarByColor(color);
-        return new ResponseEntity<>(allCars, HttpStatus.OK);
-
     public ResponseEntity<CollectionModel<List<Car>>> getAllByColor(@PathVariable String color) {
         List<Car> allCarsByColor = carService.findCarByColor(color);
         allCarsByColor.forEach(car -> car.add(linkTo(CarController.class).slash(car.getColor()).withSelfRel()));
