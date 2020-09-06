@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/cars")
+@RequestMapping("api/cars")
 public class CarController {
 
     private CarServiceImpl carService;
