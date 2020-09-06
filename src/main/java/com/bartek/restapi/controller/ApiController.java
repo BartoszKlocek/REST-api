@@ -19,27 +19,27 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("api/cars")
-public class CarController {
+public class ApiController {
 
     private CarServiceImpl carService;
 
     @Autowired
-    public CarController(CarServiceImpl carService) {
+    public ApiController(CarServiceImpl carService) {
         this.carService = carService;
     }
 
     @GetMapping
     public ResponseEntity<CollectionModel<List<Car>>> getAll() {
         List<Car> all = carService.findAll();
-        all.forEach(car -> car.add(linkTo(CarController.class).slash(car.getId()).withSelfRel()));
-        Link link = linkTo(CarController.class).withSelfRel();
+        all.forEach(car -> car.add(linkTo(ApiController.class).slash(car.getId()).withSelfRel()));
+        Link link = linkTo(ApiController.class).withSelfRel();
         CollectionModel<Car> carCollectionModel = new CollectionModel<>(all, link);
         return new ResponseEntity(carCollectionModel, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Car> findById(@PathVariable long id) {
-        Link link = linkTo(CarController.class).slash(id).withSelfRel();
+        Link link = linkTo(ApiController.class).slash(id).withSelfRel();
         if (carService.findCarByID(id).isPresent()) {
             EntityModel<Car> carEntity = new EntityModel(carService.findCarByID(id).get(), link);
             return new ResponseEntity(carEntity, HttpStatus.OK);
@@ -50,9 +50,9 @@ public class CarController {
     @GetMapping("/color/{color}")
     public ResponseEntity<CollectionModel<List<Car>>> getAllByColor(@PathVariable String color) {
         List<Car> allCarsByColor = carService.findCarByColor(color);
-        allCarsByColor.forEach(car -> car.add(linkTo(CarController.class).slash(car.getColor()).withSelfRel()));
-        allCarsByColor.forEach(car -> car.add(linkTo(CarController.class).withRel("allColors")));
-        Link link = linkTo(CarController.class).withSelfRel();
+        allCarsByColor.forEach(car -> car.add(linkTo(ApiController.class).slash(car.getColor()).withSelfRel()));
+        allCarsByColor.forEach(car -> car.add(linkTo(ApiController.class).withRel("allColors")));
+        Link link = linkTo(ApiController.class).withSelfRel();
         CollectionModel<Car> carCollectionModel = new CollectionModel<>(allCarsByColor, link);
         return new ResponseEntity(carCollectionModel, HttpStatus.OK);
     }
